@@ -53,19 +53,19 @@ function takePicture(success, error, opts) {
                     var height = image.height;
                     var aspect = image.width / image.height;
 
-                    if (width > targetWidth) {
-                        width = targetWidth;
-                        height = targetWidth / aspect;
-                    }
-                    if (height > targetHeight) {
-                        width = targetHeight / aspect;
-                        height = targetHeight;
-                    }
+                    // if (width > targetWidth) {
+                    //     width = targetWidth;
+                    //     height = targetWidth / aspect;
+                    // }
+                    // if (height > targetHeight) {
+                    //     width = targetHeight / aspect;
+                    //     height = targetHeight;
+                    // }
 
                     var canvas = document.createElement('canvas');
                     canvas.width = width;
                     canvas.height = height;
-                    canvas.getContext("2d").drawImage(this, 0, 0, image.width, image.height, 0, 0, width, height);
+                    canvas.getContext("2d").drawImage(this, 0, 0, image.width, image.height);
 
                     var imageData = canvas.toDataURL("image/jpeg");
 
