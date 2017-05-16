@@ -45,32 +45,9 @@ function takePicture(success, error, opts) {
             reader.onload = function(readerEvent) {
                 input.parentNode.removeChild(input);
 
-                // resize input to match targetWidth / targetHeight
-                var image = new Image();
-                image.src = readerEvent.target.result;
-                image.onload = function() {
-                    var width = image.width;
-                    var height = image.height;
-                    var aspect = image.width / image.height;
+                var imageData = readerEvent.target.result;
 
-                    // if (width > targetWidth) {
-                    //     width = targetWidth;
-                    //     height = targetWidth / aspect;
-                    // }
-                    // if (height > targetHeight) {
-                    //     width = targetHeight / aspect;
-                    //     height = targetHeight;
-                    // }
-
-                    var canvas = document.createElement('canvas');
-                    canvas.width = width;
-                    canvas.height = height;
-                    canvas.getContext("2d").drawImage(this, 0, 0, image.width, image.height);
-
-                    var imageData = canvas.toDataURL("image/jpeg");
-
-                    return success(imageData.substr(imageData.indexOf(',') + 1));
-                };
+                return success(imageData.substr(imageData.indexOf(',') + 1));
             };
 
             reader.readAsDataURL(inputEvent.target.files[0]);
