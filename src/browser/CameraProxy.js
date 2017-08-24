@@ -21,7 +21,7 @@
 
 var HIGHEST_POSSIBLE_Z_INDEX = 2147483647;
 
-function takePicture(success, error, opts) {
+function takePicture (success, error, opts) {
     if (opts && opts[2] === 1) {
         capture(success, error, opts);
     } else {
@@ -40,9 +40,9 @@ function takePicture(success, error, opts) {
         input.type = 'file';
         input.name = 'files[]';
 
-        input.onchange = function(inputEvent) {
-            var reader = new FileReader();
-            reader.onload = function(readerEvent) {
+        input.onchange = function (inputEvent) {
+            var reader = new FileReader(); /* eslint no-undef : 0 */
+            reader.onload = function (readerEvent) {
                 input.parentNode.removeChild(input);
 
                 var imageData = readerEvent.target.result;
@@ -59,13 +59,13 @@ function takePicture(success, error, opts) {
     }
 }
 
-function capture(success, errorCallback, opts) {
+function capture (success, errorCallback, opts) {
     var localMediaStream;
     var targetWidth = opts[3];
     var targetHeight = opts[4];
 
-    targetWidth = targetWidth == -1?320:targetWidth;
-    targetHeight = targetHeight == -1?240:targetHeight;
+    targetWidth = targetWidth === -1 ? 320 : targetWidth;
+    targetHeight = targetHeight === -1 ? 240 : targetHeight;
 
     var video = document.createElement('video');
     var button = document.createElement('button');
@@ -80,7 +80,7 @@ function capture(success, errorCallback, opts) {
     video.height = targetHeight;
     button.innerHTML = 'Capture!';
 
-    button.onclick = function() {
+    button.onclick = function () {
         // create a canvas and capture a frame from video stream
         var canvas = document.createElement('canvas');
         canvas.width = targetWidth;
@@ -110,7 +110,7 @@ function capture(success, errorCallback, opts) {
                              navigator.mozGetUserMedia ||
                              navigator.msGetUserMedia;
 
-    var successCallback = function(stream) {
+    var successCallback = function (stream) {
         localMediaStream = stream;
         video.src = window.URL.createObjectURL(localMediaStream);
         video.play();
@@ -127,7 +127,7 @@ function capture(success, errorCallback, opts) {
 
 module.exports = {
     takePicture: takePicture,
-    cleanup: function(){}
+    cleanup: function () {}
 };
 
-require("cordova/exec/proxy").add("Camera",module.exports);
+require('cordova/exec/proxy').add('Camera', module.exports);
