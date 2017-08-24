@@ -19,14 +19,18 @@
  *
  */
 
+var CameraConstants = require('../../www/CameraConstants');
+
 var HIGHEST_POSSIBLE_Z_INDEX = 2147483647;
 
 function takePicture (success, error, opts) {
     if (opts && opts[2] === 1) {
         capture(success, error, opts);
     } else {
-        var targetWidth = opts[3];
-        var targetHeight = opts[4];
+        var options = optionsArrayToObj(opts);
+
+        var targetWidth = options.targetWidth;
+        var targetHeight = options.targetHeight;
 
         targetWidth = targetWidth == -1?1080:targetWidth;
         targetHeight = targetHeight == -1?960:targetHeight;
@@ -38,6 +42,7 @@ function takePicture (success, error, opts) {
         input.style.zIndex = HIGHEST_POSSIBLE_Z_INDEX;
         input.className = 'cordova-camera-select';
         input.type = 'file';
+        input.accept = 'image/*';
         input.name = 'files[]';
 
         input.onchange = function (inputEvent) {
@@ -59,10 +64,30 @@ function takePicture (success, error, opts) {
     }
 }
 
+function optionsArrayToObj (opts) {
+    return {
+        quality: opts[0],
+        destinationType: opts[1],
+        sourceType: opts[2],
+        targetWidth: opts[3],
+        targetHeight: opts[4],
+        encodingType: opts[5],
+        mediaType: opts[6],
+        allowEdit: opts[7],
+        correctOrientation: opts[8],
+        saveToPhotoAlbum: opts[9],
+        popoverOptions: opts[10],
+        cameraDirection: opts[11],
+    };
+}
+
 function capture (success, errorCallback, opts) {
+    var options = optionsArrayToObj(opts);
+
     var localMediaStream;
-    var targetWidth = opts[3];
-    var targetHeight = opts[4];
+
+    var targetWidth = options.targetWidth;
+    var targetHeight = options.targetHeight;
 
     targetWidth = targetWidth === -1 ? 320 : targetWidth;
     targetHeight = targetHeight === -1 ? 240 : targetHeight;
