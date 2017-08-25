@@ -38,6 +38,7 @@ function takePicture(success, error, opts) {
         input.style.zIndex = HIGHEST_POSSIBLE_Z_INDEX;
         input.className = 'cordova-camera-select';
         input.type = 'file';
+        input.accept = 'image/*';
         input.name = 'files[]';
 
         input.onchange = function(inputEvent) {
